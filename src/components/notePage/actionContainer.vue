@@ -2,7 +2,7 @@
   <div class="partWrapper_np" v-if="theNote || type === 2">
     <div class="noteOptions_np">
       <h1>{{ page }}</h1>
-      <button class="deleteButton_np" @click="buttonOne">
+      <button class="deleteButton" @click="buttonOne">
         <i v-if="type === 1" class="bi bi-trash-fill"></i>
         <i v-else class="bi bi-x-circle"></i>{{ btnOne }}
       </button>
@@ -13,7 +13,9 @@
         v-if="theNote || type === 2"
         @submit.prevent="buttonConfirm"
       >
-        <h1><input class="inputTitle_np" v-model="title" type="text" /></h1>
+        <h1>
+          <input class="inputTitle_np" v-model="title" type="text" required />
+        </h1>
         <div class="category_np">
           category:
           <input class="inputCategory_np" v-model="category" type="text" />
@@ -69,6 +71,7 @@ export default {
 }
 
 .inputContent_np {
+  padding: 0.5rem;
   width: 100%;
   height: 15rem;
 }

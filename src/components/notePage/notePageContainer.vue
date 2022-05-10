@@ -7,14 +7,19 @@
         :to="{ path: '/notes/' + note._id + '/edit' }"
         ><i class="bi bi-pencil-square"></i>edit</router-link
       >
-      <button class="deleteButton_np" @click="deleteNote">
+      <button class="deleteButton" @click="deleteNote">
         <i class="bi bi-trash-fill"></i>delete
       </button>
     </div>
     <div class="noteWrapper_np">
       <div class="noteContainer_np">
         <h1>{{ theNote.title }}</h1>
-        <div class="category_np">category: {{ theNote.category }}</div>
+        <div
+          class="category_np"
+          v-if="theNote.category !== '' && theNote.category !== null"
+        >
+          category: {{ theNote.category }}
+        </div>
         <div class="content_np">{{ theNote.content }}</div>
       </div>
     </div>

@@ -47,11 +47,18 @@ export default {
     };
 
     const deleteNote = async () => {
-      success = true;
-      store.dispatch({
+      let response = await store.dispatch({
         type: "deleteNote",
         payload: { id: theNote.value._id },
       });
+
+      if (response !== true) console.log(response);
+      else if (response === false) return;
+      else {
+        success = true;
+        store.dispatch({ type: "fetchNotes" });
+        router.push({ path: "/notes" });
+      }
     };
 
     onBeforeRouteLeave((to, from, next) => {
