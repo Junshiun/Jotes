@@ -7,7 +7,7 @@
     <div class="bottomWrapper" @click="noteNavigate">
       <h1 class="title">{{ note.title }}</h1>
       <span
-        v-if="note.category !== ''"
+        v-if="note.category !== '' && note.category !== null"
         class="category"
         @click="filter(note.category)"
         >{{ note.category }}</span

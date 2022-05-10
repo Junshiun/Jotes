@@ -34,7 +34,11 @@ export default {
       let tmpArray = ["All"];
 
       props.notes.map((note) => {
-        if (!tmpArray.includes(note.category) && note.category !== "")
+        if (
+          !tmpArray.includes(note.category) &&
+          note.category !== "" &&
+          note.category !== null
+        )
           tmpArray.push(note.category);
       });
 
