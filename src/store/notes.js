@@ -30,24 +30,39 @@ const notesActions = {
       }),
     };
 
-    return new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          const response = await fetch(
-            `http://localhost:5000/notes/${id}`,
-            options
-          );
+    try {
+      const response = await fetch(
+        `http://localhost:5000/notes/${id}`,
+        options
+      );
 
-          if (!response.ok) reject("note not found");
-          else {
-            //router.push({ path: "/notes" });
-            resolve(true);
-          }
-        } catch (err) {
-          reject("error when request for note editing");
-        }
-      })();
-    });
+      if (!response.ok) return "note not found";
+      else {
+        //router.push({ path: "/notes" });
+        return true;
+      }
+    } catch (err) {
+      return "error when request for note editing";
+    }
+
+    // return new Promise((resolve, reject) => {
+    //   (async () => {
+    //     try {
+    //       const response = await fetch(
+    //         `http://localhost:5000/notes/${id}`,
+    //         options
+    //       );
+
+    //       if (!response.ok) reject("note not found");
+    //       else {
+    //         //router.push({ path: "/notes" });
+    //         resolve(true);
+    //       }
+    //     } catch (err) {
+    //       reject("error when request for note editing");
+    //     }
+    //   })();
+    // });
   },
 
   async createNote(
@@ -67,57 +82,96 @@ const notesActions = {
       }),
     };
 
-    return new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          const response = await fetch(
-            "http://localhost:5000/notes/create",
-            options
-          );
+    try {
+      const response = await fetch(
+        "http://localhost:5000/notes/create",
+        options
+      );
 
-          if (!response.ok) reject("error when creating new note");
-          else {
-            resolve(true);
-            dispatch("fetchNotes");
-            router.push({ path: "/notes" });
-          }
-        } catch (err) {
-          reject(err);
-        }
-      })();
-    });
+      if (!response.ok) return "error when creating new note";
+      else {
+        dispatch("fetchNotes");
+        router.push({ path: "/notes" });
+        return true;
+      }
+    } catch (err) {
+      return err;
+    }
+
+    // return new Promise((resolve, reject) => {
+    //   (async () => {
+    //     try {
+    //       const response = await fetch(
+    //         "http://localhost:5000/notes/create",
+    //         options
+    //       );
+
+    //       if (!response.ok) reject("error when creating new note");
+    //       else {
+    //         resolve(true);
+    //         dispatch("fetchNotes");
+    //         router.push({ path: "/notes" });
+    //       }
+    //     } catch (err) {
+    //       reject(err);
+    //     }
+    //   })();
+    // });
   },
 
   async deleteNote({ dispatch, state }, { payload: { id } }) {
     let yes = confirm("Are you sure?");
-    return new Promise((resolve, reject) => {
-      (async () => {
-        if (yes) {
-          const options = {
-            method: "DELETE",
-            headers: {
-              Authorization: `Bearer ${state.user.token}`,
-            },
-          };
 
-          try {
-            const response = await fetch(
-              `http://localhost:5000/notes/${id}`,
-              options
-            );
+    if (yes) {
+      const options = {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${state.user.token}`,
+        },
+      };
 
-            if (!response.ok) reject("error when delete note");
-            else {
-              resolve(true);
-              dispatch("fetchNotes");
-              router.push({ path: "/notes" });
-            }
-          } catch (err) {
-            reject(err);
-          }
-        } else resolve(true);
-      })();
-    });
+      try {
+        const response = await fetch(
+          `http://localhost:5000/notes/${id}`,
+          options
+        );
+
+        if (!response.ok) return "error when delete note";
+        else {
+          return true;
+        }
+      } catch (err) {
+        return err;
+      }
+    } else return false;
+    // return new Promise((resolve, reject) => {
+    //   (async () => {
+    //     if (yes) {
+    //       const options = {
+    //         method: "DELETE",
+    //         headers: {
+    //           Authorization: `Bearer ${state.user.token}`,
+    //         },
+    //       };
+
+    //       try {
+    //         const response = await fetch(
+    //           `http://localhost:5000/notes/${id}`,
+    //           options
+    //         );
+
+    //         if (!response.ok) reject("error when delete note");
+    //         else {
+    //           resolve(true);
+    //           dispatch("fetchNotes");
+    //           router.push({ path: "/notes" });
+    //         }
+    //       } catch (err) {
+    //         reject(err);
+    //       }
+    //     } else resolve(true);
+    //   })();
+    // });
   },
 };
 
