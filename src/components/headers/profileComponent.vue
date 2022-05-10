@@ -3,7 +3,9 @@
     <i class="bi bi-person-circle" @click.stop="clickHandler"></i>
     <div v-show="profileShow" class="profileContainer">
       <div v-if="store.state.user">
-        <div class="profileDetail">{{ store.state.user.name }}</div>
+        <div class="profileDetail" @click="profile">
+          {{ store.state.user.name }}
+        </div>
         <div class="profileDetail">
           <router-link class="link" to="/notes">my notes</router-link>
         </div>
@@ -44,14 +46,18 @@ export default {
     };
 
     const login = () => {
-      router.push({ path: "/login" });
+      router.push({ path: "/user" });
     };
 
     const logout = () => {
       store.dispatch("userLogout");
     };
 
-    return { profileShow, clickHandler, test, store, login, logout };
+    const profile = () => {
+      router.push({ path: "/user/profile" });
+    };
+
+    return { profileShow, clickHandler, test, store, login, logout, profile };
   },
 };
 </script>
@@ -59,6 +65,7 @@ export default {
 <style scoped>
 .profileWrap {
   position: relative;
+  z-index: 1;
 }
 
 .bi {
