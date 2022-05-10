@@ -1,11 +1,13 @@
 import homePage from "../pages/homePage";
 import notesPage from "../pages/notesPage";
-import userRegister from "../pages/userRegister";
-import userLogin from "../pages/userLogin";
 import createNotePage from "../components/notePage/createPage.vue";
 import notePage from "../pages/notePage.vue";
 import notePageContainer from "../components/notePage/notePageContainer.vue";
 import editPage from "../components/notePage/editPage.vue";
+import userMain from "../pages/userMain.vue";
+import userProfile from "../pages/userProfile.vue";
+import profileMain from "../components/profilePage/profileMain.vue";
+import profileEdit from "../components/profilePage/profileEdit.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 export const router = createRouter({
@@ -17,14 +19,26 @@ export const router = createRouter({
       component: homePage,
     },
     {
-      path: "/register",
-      name: "userRegister",
-      component: userRegister,
+      path: "/user",
+      name: "userMain",
+      component: userMain,
     },
     {
-      path: "/login",
-      name: "userLogin",
-      component: userLogin,
+      path: "/user/profile",
+      name: "userProfile",
+      component: userProfile,
+      children: [
+        {
+          path: "",
+          name: "profileMain",
+          component: profileMain,
+        },
+        {
+          path: "edit",
+          name: "profileEdit",
+          component: profileEdit,
+        },
+      ],
     },
     {
       path: "/notes",
