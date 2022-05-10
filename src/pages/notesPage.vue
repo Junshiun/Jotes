@@ -36,7 +36,7 @@ export default {
     store.dispatch("getUserData");
 
     if (!store.state.user) {
-      router.push({ path: "/" });
+      router.push({ path: "/user" });
       return;
     }
 

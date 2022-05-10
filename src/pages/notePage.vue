@@ -71,18 +71,18 @@ export default {
 }
 
 .editButton_np > i,
-.deleteButton_np > i {
+.deleteButton > i {
   margin-right: 0.5rem;
 }
 
-.deleteButton_np {
+.deleteButton {
   padding: 1rem;
   border: none;
   cursor: pointer;
   background-color: transparent;
 }
 
-.deleteButton_np > i {
+.deleteButton > i {
   color: #990000;
 }
 
