@@ -9,9 +9,10 @@ const notesActions = {
       },
     };
 
-    const notes = await fetch("http://localhost:5000/notes", options).then(
-      (res) => res.json()
-    );
+    const notes = await fetch(
+      process.env.VUE_APP_BACKEND + "/notes",
+      options
+    ).then((res) => res.json());
 
     commit("updateNotes", notes);
   },
@@ -32,7 +33,7 @@ const notesActions = {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/notes/${id}`,
+        process.env.VUE_APP_BACKEND + `/notes/${id}`,
         options
       );
 
@@ -84,7 +85,7 @@ const notesActions = {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/notes/create",
+        process.env.VUE_APP_BACKEND + "/notes/create",
         options
       );
 
@@ -132,7 +133,7 @@ const notesActions = {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/notes/${id}`,
+          process.env.VUE_APP_BACKEND + `/notes/${id}`,
           options
         );
 

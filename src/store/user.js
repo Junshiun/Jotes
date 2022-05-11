@@ -18,7 +18,11 @@ const userActions = {
     };
 
     try {
-      let response = await fetch("http://localhost:5000/users/login", options);
+      console.log(process.env.VUE_APP_BACKEND);
+      let response = await fetch(
+        process.env.VUE_APP_BACKEND + "/users/login",
+        options
+      );
 
       let data = await response.json();
 
@@ -80,7 +84,7 @@ const userActions = {
 
     try {
       let response = await fetch(
-        "http://localhost:5000/users/profile",
+        process.env.VUE_APP_BACKEND + "/users/profile",
         options
       );
 
@@ -117,7 +121,7 @@ const userActions = {
 
     try {
       let response = await fetch(
-        "http://localhost:5000/users/profile",
+        process.env.VUE_APP_BACKEND + "/users/profile",
         options
       );
 
