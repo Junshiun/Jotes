@@ -1,3 +1,4 @@
+g
 <template>
   <div class="noteWrapper">
     <div class="topWrapper">

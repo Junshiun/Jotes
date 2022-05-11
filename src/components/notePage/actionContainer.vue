@@ -77,7 +77,7 @@ export default {
 }
 
 button[type="submit"] {
-  margin-top: 1rem;
+  margin: 1rem 0 1rem 0;
   border: none;
   padding: 0.5rem;
   float: right;

@@ -81,7 +81,10 @@ export default {
       };
 
       try {
-        let response = await fetch("http://localhost:5000/users", options);
+        let response = await fetch(
+          process.env.VUE_APP_BACKEND + "/users",
+          options
+        );
 
         //sessionStorage.setItem("userData", JSON.stringify(postData));
 

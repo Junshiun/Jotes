@@ -78,8 +78,8 @@ export default {
   background-color: #f6f6f6;
   height: calc(100vh - var(--header-height));
   overflow: hidden;
-  width: 20rem;
-  flex-shrink: 0;
+  /* width: 18rem; */
+  /* flex-shrink: 0; */
 }
 
 .categoriesWrap {
