@@ -26,7 +26,7 @@ export default {
       };
 
       const response = await fetch(
-        `http://localhost:5000/notes/${note_id}`,
+        process.env.VUE_APP_BACKEND + `/notes/${note_id}`,
         options
       );
 
@@ -87,7 +87,7 @@ export default {
 }
 
 .noteWrapper_np {
-  max-height: calc(100% - var(--top-bar-height));
+  max-height: calc(100vh - var(--top-bar-height) - var(--header-height));
   overflow-y: auto;
   padding: 1rem 1rem 0 0;
   display: flex;
@@ -98,6 +98,7 @@ export default {
   display: block;
   padding-left: 1rem;
   width: 100%;
+  height: fit-content;
 }
 
 .noteContainer_np > h1 {

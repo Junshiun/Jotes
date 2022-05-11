@@ -71,26 +71,27 @@ export default {
 
 <style scoped>
 .mainPage {
-  display: flex;
+  display: grid;
   max-height: calc(100vh - var(--header-height));
   overflow-y: hidden;
   overflow-x: auto;
+  grid-template-columns: 1fr 1.5fr 2fr;
 }
 
 .notes {
   display: flex;
   flex-direction: column;
-  width: 30rem;
+  /* width: 25rem; */
   padding-right: 0.5rem;
-  max-height: 100vh;
+  max-height: calc(100vh - var(--header-height));
   overflow-y: auto;
   /*grid-template-columns: 30rem;
   grid-auto-rows: max-content;*/
   border-right: 2px solid #f3f6f4;
-  flex-shrink: 0;
+  /* flex-shrink: 0; */
 }
 
 .partWrapper {
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 </style>
