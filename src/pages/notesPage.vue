@@ -33,12 +33,14 @@ export default {
 
     const store = useStore();
 
-    store.dispatch("getUserData");
+    (async () => {
+      await store.dispatch("getUserData");
 
-    if (!store.state.user) {
-      router.push({ path: "/user" });
-      return;
-    }
+      if (!store.state.user) {
+        router.push({ path: "/user" });
+        return;
+      }
+    })();
 
     store.dispatch("fetchNotes");
 
