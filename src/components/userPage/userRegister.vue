@@ -3,6 +3,8 @@
     title="Sign Up"
     buttonName="register"
     @formSubmit="registerUser"
+    id="userRegisterForm"
+    :class="{ action: selected === 'register' }"
   >
     <!-- <form class="userForm_up" @submit="formSubmit"> -->
     <div class="inputField_up">
@@ -36,22 +38,30 @@
     <!-- <button class="userMainButton_up" type="submit">register</button> -->
     <!-- </form> -->
   </userContainer>
+  <loadingPage :show="loadShow"></loadingPage>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
 import userContainer from "./userContainer.vue";
+import loadingPage from "../loadingPage.vue";
+import { useStore } from "vuex";
 
 export default {
   name: "userRegister",
+  props: ["selected"],
   components: {
     userContainer,
+    loadingPage,
   },
   setup(props, context) {
     let name = ref(null);
     let email = ref(null);
     let password = ref(null);
     let confirmPwd = ref(null);
+    let loadShow = ref(false);
+
+    const store = useStore();
 
     const registerUser = async () => {
       if (password.value.length < 8) {
@@ -68,47 +78,48 @@ export default {
         return;
       }
 
-      let options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      loadShow.value = true;
+
+      let response = await store.dispatch({
+        type: "userRegister",
+        payload: {
           name: name.value,
           email: email.value,
           password: password.value,
-        }),
-      };
+        },
+      });
 
-      try {
-        let response = await fetch(
-          process.env.VUE_APP_BACKEND + "/users",
-          options
+      if (response === false) {
+        context.emit(
+          "errorUpdate",
+          "an account with the same email already exists, please try again"
         );
+      } else if (response === true) {
+        context.emit(
+          "infoUpdate",
+          "account created successfully, please try to login"
+        );
+        name.value = "";
+        email.value = "";
+        password.value = "";
+        confirmPwd.value = "";
+        console.log("here");
 
-        //sessionStorage.setItem("userData", JSON.stringify(postData));
+        document
+          .getElementById("userRegisterButton")
+          .classList.remove("selected");
+        document.getElementById("userLoginButton").classList.add("selected");
 
-        if (!response.ok) {
-          context.emit(
-            "errorUpdate",
-            "an account with the same email already exists, please try again"
-          );
-        } else {
-          context.emit(
-            "infoUpdate",
-            "account created successfully, please try to login"
-          );
-          name.value = "";
-          email.value = "";
-          password.value = "";
-          confirmPwd.value = "";
-        }
-      } catch (error) {
-        context.emit("errorUpdate", error);
+        document.getElementById("userRegisterForm").classList.remove("action");
+        document.getElementById("userLoginForm").classList.add("action");
+      } else {
+        context.emit("errorUpdate", response);
       }
+
+      loadShow.value = false;
     };
 
-    return { name, email, password, confirmPwd, registerUser };
+    return { name, email, password, confirmPwd, registerUser, loadShow };
   },
 };
 </script>

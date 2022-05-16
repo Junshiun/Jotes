@@ -33,7 +33,7 @@ export default {
 .userContainer_up {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 0rem 2rem 1rem 2rem;
   width: 100%;
   background-color: white;
 }
@@ -114,5 +114,33 @@ export default {
 
 .userMainButton_up:hover {
   background-color: #eeeeee;
+}
+
+@media screen and (max-width: 700px) {
+  .userContainer_up {
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 2rem 1rem 2rem;
+    width: 100%;
+    background-color: white;
+    transform: translateX(100%);
+    transition: transform 1s, opacity 0s;
+  }
+
+  .userContainer_up.action {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .userContainer_up:not(.action) {
+    width: 0;
+    height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+
+  .userContainer_up:not(:last-child) {
+    border-right: none;
+  }
 }
 </style>

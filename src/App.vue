@@ -32,4 +32,17 @@ body {
   margin: 0;
   max-width: 100%;
 }
+
+#app {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 700px) {
+  #app {
+    height: 100vh;
+    max-height: unset;
+    overflow: unset;
+  }
+}
 </style>
