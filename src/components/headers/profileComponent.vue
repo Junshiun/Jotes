@@ -49,15 +49,23 @@ export default {
       router.push({ path: "/user" });
     };
 
-    const logout = () => {
-      store.dispatch("userLogout");
+    const logout = async () => {
+      await store.dispatch("userLogout");
     };
 
     const profile = () => {
       router.push({ path: "/user/profile" });
     };
 
-    return { profileShow, clickHandler, test, store, login, logout, profile };
+    return {
+      profileShow,
+      clickHandler,
+      test,
+      store,
+      login,
+      logout,
+      profile,
+    };
   },
 };
 </script>
