@@ -139,6 +139,7 @@ const notesActions = {
 
         if (!response.ok) return "error when delete note";
         else {
+          dispatch("fetchNotes");
           return true;
         }
       } catch (err) {

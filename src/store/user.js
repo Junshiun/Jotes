@@ -5,6 +5,34 @@ const userActions = {
     let data = JSON.parse(sessionStorage.getItem("userData"));
     context.commit("saveUser", data);
   },
+  async userRegister({ dispatch }, { payload }) {
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: payload.name,
+        email: payload.email,
+        password: payload.password,
+      }),
+    };
+
+    try {
+      let response = await fetch(
+        process.env.VUE_APP_BACKEND + "/users",
+        options
+      );
+
+      if (!response.ok) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      return error;
+    }
+  },
   async userLogin({ dispatch }, { payload: { email, password } }) {
     let options = {
       method: "POST",
@@ -129,6 +157,7 @@ const userActions = {
 
       if (response.ok) {
         sessionStorage.removeItem("userData");
+        console.log("dispatch success");
         dispatch({
           type: "getUserData",
         });
