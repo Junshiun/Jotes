@@ -1,6 +1,6 @@
 <template>
   <profileTemplate v-if="user" type="edit" :error="error">
-    <form @submit.prevent="editUser">
+    <form @submit.prevent>
       <div class="relativeImgContainer">
         <div class="imgContainer">
           <img class="profileImage" src="/avatar1.png" />
@@ -45,15 +45,16 @@
         </div>
       </div>
       <div class="buttonWrap">
-        <button class="deleteButton" @click="deleteUser">
+        <button class="deleteButton" type="submit" @click="deleteUser">
           <i class="bi bi-trash-fill"></i>Delete Account
         </button>
-        <button class="doneButton" type="submit">
+        <button class="doneButton" type="submit" @click="editUser">
           <i class="bi bi-pencil-square"></i> Done Edit
         </button>
       </div>
     </form>
   </profileTemplate>
+  <loadingPage :show="loadShow"></loadingPage>
 </template>
 
 <script>
@@ -62,11 +63,13 @@ import profileTemplate from "./profileTemplate.vue";
 import { useStore } from "vuex";
 import { onBeforeRouteLeave } from "vue-router";
 import { router } from "../../router";
+import loadingPage from "../loadingPage.vue";
 export default {
   name: "profileEdit",
   props: ["user", "notes"],
   components: {
     profileTemplate,
+    loadingPage,
   },
   setup(props, context) {
     let name = ref(props.user.name);
@@ -78,13 +81,17 @@ export default {
 
     let changePwd = ref(false);
 
+    let loadShow = ref(false);
+
     const store = useStore();
 
     const updateChangePwd = () => {
       changePwd.value = !changePwd.value;
     };
 
-    const editUser = async () => {
+    const editUser = async (e) => {
+      loadShow.value = true;
+
       let response = await store.dispatch({
         type: "userEdit",
         payload: {
@@ -100,9 +107,13 @@ export default {
         success = true;
         router.push({ path: "/user/profile" });
       }
+
+      loadShow.value = false;
     };
 
-    const deleteUser = async () => {
+    const deleteUser = async (e) => {
+      loadShow.value = true;
+
       let response = await store.dispatch({
         type: "userDelete",
         payload: {
@@ -113,8 +124,11 @@ export default {
       if (response !== true) errorUpdate(response);
       else {
         success = true;
+        console.log("delete success");
         router.push({ path: "/" });
       }
+
+      loadShow.value = false;
     };
 
     const errorUpdate = (err) => {
@@ -141,6 +155,7 @@ export default {
       editUser,
       deleteUser,
       error,
+      loadShow,
     };
   },
 };

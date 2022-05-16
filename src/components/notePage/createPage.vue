@@ -6,6 +6,7 @@
     @buttonConfirm="createNote"
     @buttonOne="discard"
   ></actionContainer>
+  <loadingPage :show="loadShow"></loadingPage>
 </template>
 
 <script>
@@ -13,20 +14,26 @@ import { useStore } from "vuex";
 import actionContainer from "./actionContainer.vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { router } from "../../router";
+import loadingPage from "../loadingPage.vue";
+import { ref } from "@vue/reactivity";
 
 export default {
   name: "createPage",
   components: {
     actionContainer,
+    loadingPage,
   },
   setup() {
     let success = false;
+    let loadShow = ref(false);
 
     const store = useStore();
 
     const createNote = async ({ title, category, content }) => {
       success = true;
-      store.dispatch({
+      loadShow.value = true;
+
+      await store.dispatch({
         type: "createNote",
         payload: {
           title: title,
@@ -34,6 +41,8 @@ export default {
           content: content,
         },
       });
+
+      loadShow.value = false;
     };
 
     const discard = () => {
@@ -48,7 +57,7 @@ export default {
       } else next();
     });
 
-    return { createNote, discard };
+    return { createNote, discard, loadShow };
   },
 };
 </script>

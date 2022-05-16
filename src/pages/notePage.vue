@@ -1,5 +1,9 @@
 <template>
   <router-view v-if="note" :note="note"></router-view>
+  <div v-else class="loadWrap_np">
+    <div class="load_np">loading</div>
+    <div class="loadBar_np"></div>
+  </div>
 </template>
 
 <script>
@@ -115,5 +119,42 @@ export default {
 .noteContainer_np > .content_np {
   border-top: 2px solid #f6f6f6;
   padding-top: 0.5rem;
+}
+
+.loadWrap_np {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadBar_np {
+  position: relative;
+  margin-top: 1rem;
+  width: 10rem;
+  height: 0.2rem;
+  overflow: hidden;
+}
+
+.loadBar_np::after {
+  position: absolute;
+  content: "";
+  height: 1rem;
+  width: 2rem;
+  top: 0;
+  background-color: #bcbcbc;
+  animation: load_np 2s infinite;
+}
+
+@keyframes load_np {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: 100%;
+  }
 }
 </style>

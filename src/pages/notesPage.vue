@@ -11,6 +11,7 @@
     </div>
     <router-view :key="$route.fullPath" class="partWrapper"></router-view>
   </div>
+  <loadingPage :show="loadShow"></loadingPage>
 </template>
 
 <script>
@@ -19,17 +20,19 @@ import noteContainer from "../components/notesPage/noteContainer.vue";
 import categoryBar from "../components/notesPage/categoryBar.vue";
 import { useStore } from "vuex";
 import { router } from "../router";
-
+import loadingPage from "../components/loadingPage.vue";
 export default {
   name: "notesPage",
   components: {
     noteContainer,
     categoryBar,
+    loadingPage,
   },
   setup() {
     let notes;
     let showingNotes = ref(null);
     let category = ref(null);
+    let loadShow = ref(false);
 
     const store = useStore();
 
@@ -42,7 +45,11 @@ export default {
       }
     })();
 
-    store.dispatch("fetchNotes");
+    (async () => {
+      loadShow.value = true;
+      await store.dispatch("fetchNotes");
+      loadShow.value = false;
+    })();
 
     showingNotes = computed(() => {
       if (
@@ -66,7 +73,7 @@ export default {
       category.value = pick;
     };
 
-    return { showingNotes, filteredNotes, store };
+    return { showingNotes, filteredNotes, store, loadShow };
   },
 };
 </script>

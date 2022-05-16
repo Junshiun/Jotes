@@ -24,25 +24,41 @@
       </div>
     </div>
   </div>
+  <loadingPage :show="loadShow"></loadingPage>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { router } from "../../router";
+import loadingPage from "../loadingPage.vue";
 
 export default {
   name: "notePageContainer",
   props: ["note"],
+  components: {
+    loadingPage,
+  },
   setup(props) {
     const theNote = ref(props.note);
+    let loadShow = ref(false);
 
     const store = useStore();
 
     const deleteNote = async () => {
-      store.dispatch({ type: "deleteNote", payload: { id: props.noteId } });
+      loadShow.value = true;
+
+      let response = await store.dispatch({
+        type: "deleteNote",
+        payload: { id: theNote.value._id },
+      });
+
+      if (response === true) router.push({ path: "/notes" });
+
+      loadShow.value = false;
     };
 
-    return { theNote, deleteNote };
+    return { theNote, deleteNote, loadShow };
   },
 };
 </script>
