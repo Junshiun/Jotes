@@ -174,5 +174,12 @@ export default {
         var(--category-bar-height) - 1rem
     );
   }
+
+  .loadWrap_np {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+  }
 }
 </style>
