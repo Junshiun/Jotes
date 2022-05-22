@@ -52,6 +52,7 @@ export default {
 
 .partWrapper_np {
   width: 100%;
+  background-color: white;
 }
 
 .noteOptions_np {
@@ -155,6 +156,23 @@ export default {
 
   to {
     left: 100%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .partWrapper_np {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .noteWrapper_np {
+    padding-top: 0;
+    max-height: calc(
+      100vh - var(--top-bar-height) - var(--header-height) -
+        var(--category-bar-height) - 1rem
+    );
   }
 }
 </style>

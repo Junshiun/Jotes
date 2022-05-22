@@ -22,6 +22,7 @@
 
 <script>
 import { computed, onMounted, ref } from "@vue/runtime-core";
+import { router } from "../../router";
 export default {
   name: "categoryBar",
   props: ["notes"],
@@ -45,6 +46,15 @@ export default {
       return tmpArray;
     });
 
+    // categories.value = [
+    //   "daily",
+    //   "all",
+    //   "this is it",
+    //   "imma so smart",
+    //   "go go go",
+    //   "i am here",
+    // ];
+
     const onClick = (e, category) => {
       for (let i = 0; i < categoryRef.value.length; i++) {
         categoryRef.value[i].classList.remove("selected");
@@ -55,6 +65,8 @@ export default {
       selected.value = category;
 
       context.emit("filter", category);
+
+      router.push({ path: "/notes" });
     };
 
     onMounted(() => {
@@ -143,5 +155,37 @@ export default {
 
 .create > i {
   margin-right: 0.5rem;
+}
+
+@media screen and (max-width: 700px) {
+  .categoryBar {
+    grid-area: a;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: var(--categoty-bar-height);
+    overflow: hidden;
+    width: 100%;
+    /* flex-shrink: 0; */
+  }
+
+  .createWrap {
+    margin-right: 1rem;
+  }
+
+  .categoriesWrap {
+    max-height: unset;
+    height: 100%;
+    overflow-x: auto;
+    display: flex;
+  }
+
+  .categoryContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    min-width: 8em;
+    padding: 1rem 3rem 1rem 1rem;
+  }
 }
 </style>

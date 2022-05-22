@@ -1,4 +1,3 @@
-g
 <template>
   <div class="noteWrapper">
     <div class="topWrapper">
@@ -106,5 +105,8 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+@media screen and (max-width: 700px) {
 }
 </style>
