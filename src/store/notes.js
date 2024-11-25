@@ -1,3 +1,4 @@
+import Statics from "@/assets/statics";
 import { router } from "@/router";
 
 const notesActions = {
@@ -10,9 +11,11 @@ const notesActions = {
     };
 
     const notes = await fetch(
-      process.env.VUE_APP_BACKEND + "/notes",
+      process.env.VUE_APP_BACKEND + Statics.NOTES_ROUTE,
       options
     ).then((res) => res.json());
+
+    console.log(notes);
 
     commit("updateNotes", notes);
   },
@@ -33,7 +36,7 @@ const notesActions = {
 
     try {
       const response = await fetch(
-        process.env.VUE_APP_BACKEND + `/notes/${id}`,
+        process.env.VUE_APP_BACKEND + Statics.NOTES_ROUTE + `/${id}`,
         options
       );
 
@@ -85,7 +88,7 @@ const notesActions = {
 
     try {
       const response = await fetch(
-        process.env.VUE_APP_BACKEND + "/notes/create",
+        process.env.VUE_APP_BACKEND + Statics.NOTES_ROUTE + "/create",
         options
       );
 
@@ -133,7 +136,7 @@ const notesActions = {
 
       try {
         const response = await fetch(
-          process.env.VUE_APP_BACKEND + `/notes/${id}`,
+          process.env.VUE_APP_BACKEND + Statics.NOTES_ROUTE + `/${id}`,
           options
         );
 

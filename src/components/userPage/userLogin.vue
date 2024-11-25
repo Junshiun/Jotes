@@ -52,19 +52,23 @@ export default {
       router.push({ path: "/notes" });
     }
     const loginUser = async () => {
-      loadShow.value = true;
+      try {
+        loadShow.value = true;
 
-      let response = await store.dispatch({
-        type: "userLogin",
-        payload: { email: email.value, password: password.value },
-      });
+        let response = await store.dispatch({
+          type: "userLogin",
+          payload: { email: email.value, password: password.value },
+        });
 
-      if (response === true) console.log("login success");
-      else {
-        context.emit("errorUpdate", response);
+        if (response === true) console.log("login success");
+        else {
+          context.emit("errorUpdate", response.errorDesc);
+        }
+      } catch(err) {
+        context.emit("errorUpdate", err.message);
+      }finally {
+        loadShow.value = false;
       }
-
-      loadShow.value = false;
     };
 
     return { email, password, loginUser, loadShow };

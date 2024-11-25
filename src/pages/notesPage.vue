@@ -124,6 +124,7 @@ export default {
       "b b";
     grid-template-rows: var(--category-bar-height) 1fr;
     grid-template-columns: 1fr 1fr;
+    height: 100%;
   }
 
   .notesWrapper_main {

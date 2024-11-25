@@ -90,25 +90,29 @@ export default {
     };
 
     const editUser = async (e) => {
-      loadShow.value = true;
+      try {
+        loadShow.value = true;
 
-      let response = await store.dispatch({
-        type: "userEdit",
-        payload: {
-          password: password.value,
-          name: name.value,
-          changePwd: changePwd.value,
-          newPassword: newPassword.value,
-        },
-      });
+        let response = await store.dispatch({
+          type: "userEdit",
+          payload: {
+            password: password.value,
+            name: name.value,
+            changePwd: changePwd.value,
+            newPassword: newPassword.value,
+          },
+        });
 
-      if (response !== true) errorUpdate(response);
-      else {
-        success = true;
-        router.push({ path: "/user/profile" });
+        if (response !== true) errorUpdate(response);
+        else {
+          success = true;
+          router.push({ path: "/user/profile" });
+        }
+      } catch(err) {
+        errorUpdate(err.message);
+      } finally {
+        loadShow.value = false;
       }
-
-      loadShow.value = false;
     };
 
     const deleteUser = async (e) => {

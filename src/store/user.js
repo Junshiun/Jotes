@@ -1,3 +1,4 @@
+import Statics from "@/assets/statics";
 import { router } from "@/router";
 
 const userActions = {
@@ -20,7 +21,7 @@ const userActions = {
 
     try {
       let response = await fetch(
-        process.env.VUE_APP_BACKEND + "/users",
+        process.env.VUE_APP_BACKEND + Statics.USER_ROUTE,
         options
       );
 
@@ -48,14 +49,16 @@ const userActions = {
     try {
       console.log(process.env.VUE_APP_BACKEND);
       let response = await fetch(
-        process.env.VUE_APP_BACKEND + "/users/login",
+        process.env.VUE_APP_BACKEND + Statics.USER_ROUTE + "/login",
         options
       );
 
       let data = await response.json();
 
+      console.log(response.status);
+
       if (!response.ok) {
-        return "invalid email or password";
+        throw Error(data.errorDesc)
       } else {
         sessionStorage.setItem("userData", JSON.stringify(data));
         dispatch("getUserData");
@@ -63,7 +66,7 @@ const userActions = {
         return true;
       }
     } catch (error) {
-      return error.message;
+      throw Error(error.message);
     }
 
     // return new Promise((resolve, reject) => {
@@ -112,23 +115,25 @@ const userActions = {
 
     try {
       let response = await fetch(
-        process.env.VUE_APP_BACKEND + "/users/profile",
+        process.env.VUE_APP_BACKEND + Statics.USER_ROUTE + "/profile",
         options
       );
 
       let data = await response.json();
 
       if (response.ok) {
+
         sessionStorage.setItem("userData", JSON.stringify(data));
         dispatch({
           type: "getUserData",
         });
+
         return true;
       } else {
-        return data.message;
+        throw Error(data.errorDesc);
       }
     } catch (err) {
-      return err;
+      throw Error(err.message);
     }
   },
   async userDelete({ dispatch, state }, { payload }) {
@@ -149,7 +154,7 @@ const userActions = {
 
     try {
       let response = await fetch(
-        process.env.VUE_APP_BACKEND + "/users/profile",
+        process.env.VUE_APP_BACKEND + Statics.USER_ROUTE + "/profile",
         options
       );
 
